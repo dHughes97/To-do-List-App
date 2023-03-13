@@ -12,6 +12,9 @@ const form = document.getElementById("new-task-form");
 const newTaskInput = document.getElementById("new-task");
 const taskList = document.getElementById("task-list");
 const emptyMessage = document.getElementById("empty-message");
+// const checkbox = document.createElement("input");
+// checkbox.type = "checkbox";
+
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -25,9 +28,17 @@ form.addEventListener("submit", (event) => {
     const newTaskItem = document.createElement("li");
     //Creating the variable to add a button so we can delete items 
     const deleteButton = document.createElement("button");
+    //supposed to create the checkbox
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    
 
-    //overall is making the delete button attached to the end of a new task item 
-    newTaskItem.textContent = newTaskText; 
+
+    const label = document.createElement("label");
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(newTaskText));
+    newTaskItem.appendChild(label);
+
     deleteButton.textContent = "Delete";    //sets the text of a newly created button ("deleteButton") to the string "Delete";
     newTaskItem.appendChild(deleteButton);  //this adds the Delete button to the end of every new task item. 
 
@@ -41,7 +52,15 @@ form.addEventListener("submit", (event) => {
             emptyMessage.style.display = "block";
         }
     });
+    
+    checkbox.addEventListener("change", () => {
+      if(checkbox.checked) {
+        newTaskItem.classList.add("completed");
+      } else {
 
+        newTaskItem.classList.remove("completed");
+      }
+    });
     //Add a new task item to the task list and clear the input
     taskList.appendChild(newTaskItem);
     //Allows for previous input to not be shown in the field 
